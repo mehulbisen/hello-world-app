@@ -31,15 +31,15 @@ resource "aws_ecs_task_definition" "hello_world" {
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
 
   container_definitions = jsonencode([{
-    name  = "hello-world-container"
-    image = "your-dockerhub-username/hello-world-app:latest"
-    cpu   = var.task_cpu
-    memory = var.task_memory
+    name      = "hello-world-container"
+    image     = "your-dockerhub-username/hello-world-app:latest"
     essential = true
     portMappings = [{
       containerPort = var.container_port
       hostPort      = var.container_port
-    }]
+    }],
+    cpu    = tonumber(var.task_cpu),
+    memory = tonumber(var.task_memory)
   }])
 }
 
